@@ -67,7 +67,7 @@ var Game = {
 
 		this.ball = Ball.new.call(this);
 		this.running = false;
-		this.turn = this.player;
+		this.turn = this.paddle;
 		this.timer = 0;
 		this.round = 0;
 		this.over = false;
