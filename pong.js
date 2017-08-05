@@ -46,8 +46,6 @@ var Paddle = {
 	}
 };
 
-// The Pong Object - This the primary object that contains the
-// primary functions that allow the Pong to run.
 var Game = {
 	initialize: function () {
 		this.canvas = document.querySelector('canvas');
@@ -196,7 +194,7 @@ var Game = {
 		}
 
 		// Handle the end of round transition
-		// Check to see if the player one the round.
+		// Check to see if the player won the round.
 		if (this.player.score === rounds[this.round]) {
 			// Check to see if there are any more rounds/levels left and display the victory screen if
 			// there are not.
@@ -215,7 +213,7 @@ var Game = {
 				beep3.play();
 			}
 		}
-		// Check to see if the paddle/AI has one the round.
+		// Check to see if the paddle/AI has won the round.
 		else if (this.paddle.score === rounds[this.round]) {
 			this.over = true;
 			setTimeout(function () { Pong.endGameMenu('Game Over!'); }, 1000);
