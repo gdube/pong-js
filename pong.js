@@ -13,16 +13,11 @@ var colors = ['#1abc9c', '#2ecc71', '#3498db', '#e74c3c', '#9b59b6'];
 // The ball object (The cube that bounces back and forth)
 var Ball = {
 	new: function (incrementedSpeed) {
-		var centerX = (this.canvas.width / 2) - 9;
-		var centerY = (this.canvas.height / 2) - 9;
-
 		return {
 			width: 18,
 			height: 18,
-			x: centerX,
-			y: centerY,
-			centerX: centerX,
-			centerY: centerY,
+			x: (this.canvas.width / 2) - 9,
+			y: (this.canvas.height / 2) - 9,
 			moveX: DIRECTION.IDLE,
 			moveY: DIRECTION.IDLE,
 			speed: incrementedSpeed || 9
