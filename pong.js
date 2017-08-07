@@ -114,7 +114,7 @@ var Game = {
 		// Change the canvas color;
 		this.context.fillStyle = '#ffffff';
 
-		// Draw the paddles score (right)
+		// Draw the 'press any key to begin' text
 		this.context.fillText('Press any key to begin',
 			this.canvas.width / 2,
 			this.canvas.height / 2 + 15
