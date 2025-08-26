@@ -1,0 +1,22 @@
+div {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  flex-direction: column;
+  align-items: center;
+}
+
+canvas {
+  border-radius: 10px;
+}
+
+p {
+  font-style: italic;
+  opacity: 0.5;
+  transition-duration: 1s;
+}
+
+p:hover,
+p:focus {
+  opacity: 1;
+}
