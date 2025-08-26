@@ -1,13 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<title>pong_js</title>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-	</head>
-	<body>
+
+<head>
+	<title>Pong with JavaScript</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="main.css" />
+</head>
+
+<body>
+	<div>
 		<canvas></canvas>
-		<script src="audio.js"></script>
-		<script src="pong.js"></script>
-	</body>
+		<p>Created by <a target="_blank" href="https://github.com/gdube">Gabriel Dubé</a></p>
+	</div>
+
+	<!-- Globals -->
+	<script src="audio.js"></script>
+	<script src="const.js"></script>
+
+	<!-- Components -->
+	<script src="components/Paddle.js"></script>
+	<script src="components/PaddleBot.js"></script>
+	<script src="components/Player.js"></script>
+	<script src="components/Ball.js"></script>
+	<script src="components/Game.js"></script>
+
+	<!-- Main -->
+	<script src="main.js"></script>
+</body>
+
 </html>
