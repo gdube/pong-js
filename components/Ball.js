@@ -1,7 +1,7 @@
 class Ball {
   BALL_SIZE = 20;
-  BALL_SPEED = 9;
-  BALL_SPEED_LEVEL_INCREMENT = 0.2;
+  BALL_SPEED = 900;
+  BALL_SPEED_LEVEL_INCREMENT = 20;
 
   constructor({ x, y }) {
     this.x = x;
@@ -56,19 +56,19 @@ class Ball {
     }
   }
 
-  handleVerticalMovement() {
+  handleVerticalMovement(delta) {
     if (this.moveY === DIRECTION.UP) {
-      this.y -= this.speedY;
+      this.y -= this.speedY * delta;
     } else if (this.moveY === DIRECTION.DOWN) {
-      this.y += this.speedY;
+      this.y += this.speedY * delta;
     }
   }
 
-  handleHorizontalMovement() {
+  handleHorizontalMovement(delta) {
     if (this.moveX === DIRECTION.LEFT) {
-      this.x -= this.speedX;
+      this.x -= this.speedX * delta;
     } else if (this.moveX === DIRECTION.RIGHT) {
-      this.x += this.speedX;
+      this.x += this.speedX * delta;
     }
   }
 
@@ -86,9 +86,9 @@ class Ball {
     this.x = server.x + (direction === DIRECTION.LEFT ? - server.width : server.width);
   }
 
-  update(canvas) {
-    this.handleVerticalMovement();
-    this.handleHorizontalMovement();
+  update(canvas, delta) {
+    this.handleVerticalMovement(delta);
+    this.handleHorizontalMovement(delta);
     this.handleWallCollision(canvas);
   }
 
