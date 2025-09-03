@@ -1,5 +1,5 @@
 class PaddleBot extends Paddle {
-  SPEED_INCREMENT = 0.2;
+  SPEED_INCREMENT = 20;
 
   constructor(parameters) {
     super(parameters);
@@ -10,22 +10,22 @@ class PaddleBot extends Paddle {
     this.speed += this.SPEED_INCREMENT;
   }
 
-  handleUpMovement(target) {
+  handleUpMovement(delta, target) {
     if (this.y > target.y - (this.height / 2)) {
       if (target.moveX === DIRECTION.RIGHT) {
-        this.y -= this.speed;
+        this.y -= this.speed * delta;
       } else {
-        this.y -= this.speed / 4;
+        this.y -= (this.speed / 4) * delta;
       }
     }
   }
 
-  handleDownMovement(target) {
+  handleDownMovement(delta, target) {
     if (this.y < target.y - (this.height / 2)) {
       if (target.moveX === DIRECTION.RIGHT) {
-        this.y += this.speed;
+        this.y += this.speed * delta;
       } else {
-        this.y += this.speed / 4;
+        this.y += (this.speed / 4) * delta;
       }
     }
   }
@@ -38,9 +38,9 @@ class PaddleBot extends Paddle {
     }
   }
 
-  update(canvas, target) {
-    this.handleUpMovement(target);
-    this.handleDownMovement(target);
+  update(canvas, target, delta) {
+    this.handleUpMovement(delta, target);
+    this.handleDownMovement(delta, target);
     this.handleWallCollision(canvas);
   }
 }

@@ -5,8 +5,8 @@ class Paddle {
     this.width = 20;
     this.height = 100;
     this.score = 0;
-    this.speed = 5;
-    this.move = DIRECTION.IDLE;
+    this.speed = 500;
+    this.movement = DIRECTION.IDLE;
   }
 
   addScore() {

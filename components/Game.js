@@ -1,4 +1,5 @@
 class Game {
+	FPS = 60;
 	SCREEN_WIDTH = 1800;
 	SCREEN_HEIGHT = 1100;
 	TURN_DELAY_MS = 1000;
@@ -17,12 +18,21 @@ class Game {
 		this.canvas.style.width = `${this.canvas.width / 2}px`;
 		this.canvas.style.height = `${this.canvas.height / 2}px`;
 
+		this.lastFrame = performance.now();
+
 		this.initialize();
 		this.listen();
 	};
 
+	start() {
+		this.running = true;
+		this.lastFrame = performance.now();
+
+		window.requestAnimationFrame(this.loop.bind(this));
+	}
+
 	initialize() {
-		this.availableColours = ROUND_COLOURS;
+		this.availableColours = [...ROUND_COLOURS];
 
 		this.playerA = new Player({
 			x: this.WALL_OFFSET,
@@ -111,10 +121,10 @@ class Game {
 		return this.playerTurn === this.playerA ? DIRECTION.RIGHT : DIRECTION.LEFT;
 	}
 
-	update() {
-		this.ball.update(this.canvas);
-		this.playerB.update(this.canvas, this.ball);
-		this.playerA.update(this.canvas);
+	update(delta) {
+		this.ball.update(this.canvas, delta);
+		this.playerB.update(this.canvas, this.ball, delta);
+		this.playerA.update(this.canvas, delta);
 
 		if (this.ball.isOutOfLeftBounds()) {
 			this.resetTurn(this.playerB, this.playerA);
@@ -240,8 +250,14 @@ class Game {
 			return;
 		}
 
-		this.update();
-		this.draw();
+		const currentFrame = performance.now();
+		const delta = (currentFrame - this.lastFrame) / 1000;
+
+		if (delta >= (1 / this.FPS)) {
+			this.lastFrame = currentFrame;
+			this.update(delta);
+			this.draw();
+		}
 
 		if (!this.gameOver) {
 			requestAnimationFrame(this.loop.bind(this));
@@ -250,8 +266,9 @@ class Game {
 
 	togglePause() {
 		if (this.paused) {
-			window.requestAnimationFrame(this.loop.bind(this));
 			this.paused = false;
+			this.lastFrame = performance.now();
+			window.requestAnimationFrame(this.loop.bind(this));
 		} else {
 			this.showMenuScreen('Paused');
 			this.paused = true;
@@ -261,16 +278,15 @@ class Game {
 	listen() {
 		document.addEventListener('keydown', ({ key }) => {
 			if (this.running === false) {
-				this.running = true;
-				window.requestAnimationFrame(this.loop.bind(this));
+				this.start();
 			}
 
 			if (key === 'w' || key === 'ArrowUp') {
-				this.playerA.move = DIRECTION.UP;
+				this.playerA.move(DIRECTION.UP);
 			}
 
 			if (key === 's' || key === 'ArrowDown') {
-				this.playerA.move = DIRECTION.DOWN;
+				this.playerA.move(DIRECTION.DOWN);
 			}
 
 			if (key === 'Escape') {
@@ -279,7 +295,7 @@ class Game {
 		});
 
 		document.addEventListener('keyup', () => {
-			this.playerA.move = DIRECTION.IDLE;
+			this.playerA.move(DIRECTION.IDLE);
 		});
 	};
 
@@ -298,7 +314,7 @@ class Game {
 
 	getRandomColour() {
 		const index = Math.floor(Math.random() * this.availableColours.length);
-		const colour = this.availableColours[index];
+		const colour = this.availableColours[index] || COLOURS.DEFAULT;
 
 		this.availableColours.splice(index, 1);
 

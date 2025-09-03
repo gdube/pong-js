@@ -1,9 +1,13 @@
 class Player extends Paddle {
-  SPEED_INCREMENT = 0.3;
+  SPEED_INCREMENT = 20;
 
   constructor(parameters) {
     super(parameters);
-    this.speed = 7;
+    this.speed = 700;
+  }
+
+  move(direction) {
+    this.movement = direction;
   }
 
   levelUp() {
@@ -11,11 +15,11 @@ class Player extends Paddle {
     this.speed += this.SPEED_INCREMENT;
   }
 
-  handleMovement() {
-    if (this.move === DIRECTION.UP) {
-      this.y -= this.speed;
-    } else if (this.move === DIRECTION.DOWN) {
-      this.y += this.speed;
+  handleMovement(delta) {
+    if (this.movement === DIRECTION.UP) {
+      this.y -= this.speed * delta;
+    } else if (this.movement === DIRECTION.DOWN) {
+      this.y += this.speed * delta;
     }
   }
 
@@ -27,8 +31,8 @@ class Player extends Paddle {
     }
   }
 
-  update(canvas) {
-    this.handleMovement();
+  update(canvas, delta) {
+    this.handleMovement(delta);
     this.handleWallCollision(canvas);
   }
 }
